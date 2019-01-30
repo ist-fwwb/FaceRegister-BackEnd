@@ -11,7 +11,9 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
 import java.awt.image.DataBufferByte;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,14 +43,19 @@ public class Service {
             faceEngine.unInit();
             return;
         }
-        ImageInfo imageInfo = getRGBData(file);
-        //人脸检测
-        List<FaceInfo> faceInfoList = new ArrayList<FaceInfo>();
-        faceEngine.detectFaces(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList);
+        try{
+            ImageInfo imageInfo = getRGBData(new FileInputStream(file));
+            List<FaceInfo> faceInfoList = new ArrayList<FaceInfo>();
+            faceEngine.detectFaces(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList);
 
-        FaceFeature faceFeature = new FaceFeature();
-        faceEngine.extractFaceFeature(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList.get(0), faceFeature);
-        fileManagement.upload(fileName, faceFeature.getFeatureData());
+            FaceFeature faceFeature = new FaceFeature();
+            faceEngine.extractFaceFeature(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList.get(0), faceFeature);
+            fileManagement.upload(fileName, faceFeature.getFeatureData());
+        }
+        catch (Exception e){
+
+        }
+        //人脸检测
         faceEngine.unInit();
     }
 
@@ -64,6 +71,29 @@ public class Service {
             e.printStackTrace();
             return null;
         }
+        return imageInfo;
+    }
+
+    public ImageInfo getRGBData(InputStream input) {
+        if (input == null)
+            return null;
+        ImageInfo imageInfo;
+        try {
+            BufferedImage image = ImageIO.read(input);
+            imageInfo=bufferedImage2ImageInfo(image);
+        } catch (IOException e) {
+            return null;
+        }finally {
+            if(input!=null){
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
         return imageInfo;
     }
 
