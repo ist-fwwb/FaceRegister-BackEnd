@@ -35,7 +35,13 @@ public class Service {
                         .build()).build();
         faceEngine.init(engineConfiguration);
         fileManagement.download(fileName+".jpg");
-        ImageInfo imageInfo = getRGBData(new File(fileName+".jpg"));
+        File file = new File(fileName+".jpg");
+        if (!file.exists()) {
+            System.out.println("file not exits");
+            faceEngine.unInit();
+            return;
+        }
+        ImageInfo imageInfo = getRGBData(file);
         //人脸检测
         List<FaceInfo> faceInfoList = new ArrayList<FaceInfo>();
         faceEngine.detectFaces(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList);

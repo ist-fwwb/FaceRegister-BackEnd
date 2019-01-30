@@ -28,6 +28,7 @@ public class FileManagement {
         if (inputStream != null) {
             try{
                 File file = new File(name);
+                if (!file.exists()) file.createNewFile();
                 OutputStream os = new FileOutputStream(file);
                 byte[] buffer = new byte[2048];
                 int len;
