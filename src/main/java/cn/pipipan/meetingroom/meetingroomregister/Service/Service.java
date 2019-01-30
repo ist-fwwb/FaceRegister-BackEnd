@@ -36,8 +36,8 @@ public class Service {
                         .supportGender(true)
                         .build()).build();
         faceEngine.init(engineConfiguration);
-        fileManagement.download(fileName+".jpg");
-        File file = new File("/tmp/"+fileName+".jpg");
+        fileManagement.download(fileName+".yuv");
+        File file = new File("/tmp/"+fileName+".yuv");
         if (!file.exists()) {
             System.out.println("file not exits");
             faceEngine.unInit();
