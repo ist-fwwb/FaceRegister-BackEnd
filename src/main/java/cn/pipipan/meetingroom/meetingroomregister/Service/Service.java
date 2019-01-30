@@ -21,22 +21,19 @@ public class Service {
     @Autowired
     FileManagement fileManagement;
 
-    FaceEngine faceEngine;
 
     public void doProcess(String fileName){
-        if (faceEngine == null) {
-            faceEngine = new FaceEngine();
-            faceEngine.active("3G4cuARsSzRB1yqCdb81k9BYg9REisXrUEvpa9f2Mhz8", "2NLXmxWqt6FGT1v79DWcJaGorM3qxZu4H3ezWXt34r9M");
-            EngineConfiguration engineConfiguration = EngineConfiguration.builder().functionConfiguration(
-                    FunctionConfiguration.builder()
-                            .supportAge(true)
-                            .supportFace3dAngle(true)
-                            .supportFaceDetect(true)
-                            .supportFaceRecognition(true)
-                            .supportGender(true)
-                            .build()).build();
-            faceEngine.init(engineConfiguration);
-        }
+        FaceEngine faceEngine = new FaceEngine();
+        faceEngine.active("3G4cuARsSzRB1yqCdb81k9BYg9REisXrUEvpa9f2Mhz8", "2NLXmxWqt6FGT1v79DWcJaGorM3qxZu4H3ezWXt34r9M");
+        EngineConfiguration engineConfiguration = EngineConfiguration.builder().functionConfiguration(
+                FunctionConfiguration.builder()
+                        .supportAge(true)
+                        .supportFace3dAngle(true)
+                        .supportFaceDetect(true)
+                        .supportFaceRecognition(true)
+                        .supportGender(true)
+                        .build()).build();
+        faceEngine.init(engineConfiguration);
         fileManagement.download(fileName+".jpg");
         ImageInfo imageInfo = getRGBData(new File(fileName+".jpg"));
         //人脸检测
@@ -46,6 +43,7 @@ public class Service {
         FaceFeature faceFeature = new FaceFeature();
         faceEngine.extractFaceFeature(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList.get(0), faceFeature);
         fileManagement.upload(fileName, faceFeature.getFeatureData());
+        faceEngine.unInit();
     }
 
     private ImageInfo getRGBData(File file) {
