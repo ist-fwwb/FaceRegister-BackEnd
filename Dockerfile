@@ -1,4 +1,4 @@
-FROM registry.cn-shenzhen.aliyuncs.com/pipipan/java-face-arcsoft:master
+FROM registry.cn-shenzhen.aliyuncs.com/pipipan/java-face-arcsoft:latest
 VOLUME /tmp
 RUN mkdir /app
 ADD target/meetingroom-register-0.0.1-SNAPSHOT.jar /app/app.jar

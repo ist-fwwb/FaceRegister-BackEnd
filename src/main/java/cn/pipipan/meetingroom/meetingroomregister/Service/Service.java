@@ -1,12 +1,9 @@
 package cn.pipipan.meetingroom.meetingroomregister.Service;
 
-import cn.pipipan.meetingroom.meetingroomregister.Util.FaceEngineFactory;
 import cn.pipipan.meetingroom.meetingroomregister.Util.FileManagement;
-import com.arcsoft.face.FaceFeature;
-import com.arcsoft.face.FaceInfo;
+import com.arcsoft.face.*;
 import com.arcsoft.face.enums.ImageFormat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.color.ColorSpace;
@@ -23,15 +20,31 @@ import java.util.List;
 public class Service {
     @Autowired
     FileManagement fileManagement;
+
+    FaceEngine faceEngine;
+
     public void doProcess(String fileName){
+        if (faceEngine == null) {
+            faceEngine = new FaceEngine();
+            faceEngine.active("3G4cuARsSzRB1yqCdb81k9BYg9REisXrUEvpa9f2Mhz8", "2NLXmxWqt6FGT1v79DWcJaGorM3qxZu4H3ezWXt34r9M");
+            EngineConfiguration engineConfiguration = EngineConfiguration.builder().functionConfiguration(
+                    FunctionConfiguration.builder()
+                            .supportAge(true)
+                            .supportFace3dAngle(true)
+                            .supportFaceDetect(true)
+                            .supportFaceRecognition(true)
+                            .supportGender(true)
+                            .build()).build();
+            faceEngine.init(engineConfiguration);
+        }
         fileManagement.download(fileName+".jpg");
         ImageInfo imageInfo = getRGBData(new File(fileName+".jpg"));
         //人脸检测
         List<FaceInfo> faceInfoList = new ArrayList<FaceInfo>();
-        FaceEngineFactory.getInstance().detectFaces(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList);
+        faceEngine.detectFaces(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList);
 
         FaceFeature faceFeature = new FaceFeature();
-        FaceEngineFactory.getInstance().extractFaceFeature(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList.get(0), faceFeature);
+        faceEngine.extractFaceFeature(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList.get(0), faceFeature);
         fileManagement.upload(fileName, faceFeature.getFeatureData());
     }
 
