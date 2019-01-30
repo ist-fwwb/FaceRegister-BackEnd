@@ -1,9 +1,11 @@
 package cn.pipipan.meetingroom.meetingroomregister.Service;
 
 import cn.pipipan.meetingroom.meetingroomregister.Util.FaceEngineFactory;
+import cn.pipipan.meetingroom.meetingroomregister.Util.FileManagement;
 import com.arcsoft.face.FaceFeature;
 import com.arcsoft.face.FaceInfo;
 import com.arcsoft.face.enums.ImageFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -19,15 +21,18 @@ import java.util.List;
 
 @org.springframework.stereotype.Service
 public class Service {
-    public void doProcess(MultipartFile multipartFile){
-
-        ImageInfo imageInfo = getRGBData(new File(""));
+    @Autowired
+    FileManagement fileManagement;
+    public void doProcess(String fileName){
+        fileManagement.download(fileName+".jpg");
+        ImageInfo imageInfo = getRGBData(new File(fileName+".jpg"));
         //人脸检测
         List<FaceInfo> faceInfoList = new ArrayList<FaceInfo>();
         FaceEngineFactory.getInstance().detectFaces(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList);
 
         FaceFeature faceFeature = new FaceFeature();
         FaceEngineFactory.getInstance().extractFaceFeature(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList.get(0), faceFeature);
+        fileManagement.upload(fileName, faceFeature.getFeatureData());
     }
 
     private ImageInfo getRGBData(File file) {

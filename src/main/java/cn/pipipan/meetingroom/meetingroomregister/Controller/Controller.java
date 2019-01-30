@@ -13,7 +13,7 @@ public class Controller {
     Service service;
 
     @PostMapping("")
-    public String processFile(@RequestParam(name = "file")MultipartFile file){
-        return "";
+    public void processFile(String fileName){
+        service.doProcess(fileName);
     }
 }
