@@ -1,9 +1,8 @@
-FROM registry.cn-shenzhen.aliyuncs.com/javajs/java
+FROM registry.cn-shenzhen.aliyuncs.com/pipipan/java-face-arcsoft:master
 VOLUME /tmp
 RUN mkdir /app
 ADD target/meetingroom-core-0.0.1-SNAPSHOT.jar /app/app.jar
 ADD runboot.sh /app
-ADD lib/LINUX64/* $JAVA_HOME/lib/amd64/
 ENV TZ=Asia/Shanghai
 RUN sh -c 'touch /app/app.jar' && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 WORKDIR /app
