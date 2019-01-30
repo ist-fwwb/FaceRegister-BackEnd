@@ -13,7 +13,7 @@ public class Controller {
     Service service;
 
     @PostMapping("")
-    public void processFile(String fileName){
+    public void processFile(@RequestParam(name="fileName") String fileName){
         service.doProcess(fileName);
     }
 }
