@@ -35,7 +35,7 @@ public class Service {
                         .build()).build();
         faceEngine.init(engineConfiguration);
         fileManagement.download(fileName+".jpg");
-        File file = new File(fileName+".jpg");
+        File file = new File("/tmp/"+fileName+".jpg");
         if (!file.exists()) {
             System.out.println("file not exits");
             faceEngine.unInit();
