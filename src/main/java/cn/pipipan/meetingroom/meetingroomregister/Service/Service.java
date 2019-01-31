@@ -27,15 +27,15 @@ public class Service {
     public void doProcess(String fileName){
         FaceEngine faceEngine = new FaceEngine();
         faceEngine.active("3G4cuARsSzRB1yqCdb81k9BYg9REisXrUEvpa9f2Mhz8", "2NLXmxWqt6FGT1v79DWcJaGorM3qxZu4H3ezWXt34r9M");
-        EngineConfiguration engineConfiguration = EngineConfiguration.builder().functionConfiguration(
-                FunctionConfiguration.builder()
-                        .supportAge(true)
-                        .supportFace3dAngle(true)
-                        .supportFaceDetect(true)
-                        .supportFaceRecognition(true)
-                        .supportGender(true)
-                        .build()).build();
-        faceEngine.init(engineConfiguration);
+//        EngineConfiguration engineConfiguration = EngineConfiguration.builder().functionConfiguration(
+//                FunctionConfiguration.builder()
+//                        .supportAge(true)
+//                        .supportFace3dAngle(true)
+//                        .supportFaceDetect(true)
+//                        .supportFaceRecognition(true)
+//                        .supportGender(true)
+//                        .build()).build();
+//        faceEngine.init(engineConfiguration);
 //        fileManagement.download(fileName+".yuv");
 //        File file = new File("/tmp/"+fileName+".yuv");
 //        if (!file.exists()) {
@@ -56,7 +56,7 @@ public class Service {
 //
 //        }
         //人脸检测
-        faceEngine.unInit();
+//        faceEngine.unInit();
     }
 
     private ImageInfo getRGBData(File file) {
