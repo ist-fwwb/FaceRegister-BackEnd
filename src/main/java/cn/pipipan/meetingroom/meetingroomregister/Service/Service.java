@@ -26,7 +26,7 @@ public class Service {
 
     public void doProcess(String fileName){
         FaceEngine faceEngine = new FaceEngine();
-        faceEngine.active("3G4cuARsSzRB1yqCdb81k9BYg9REisXrUEvpa9f2Mhz8", "2NLXmxWqt6FGT1v79DWcJaGorM3qxZu4H3ezWXt34r9M");
+//        faceEngine.active("3G4cuARsSzRB1yqCdb81k9BYg9REisXrUEvpa9f2Mhz8", "2NLXmxWqt6FGT1v79DWcJaGorM3qxZu4H3ezWXt34r9M");
 //        EngineConfiguration engineConfiguration = EngineConfiguration.builder().functionConfiguration(
 //                FunctionConfiguration.builder()
 //                        .supportAge(true)
