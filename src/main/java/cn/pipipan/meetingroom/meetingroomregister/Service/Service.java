@@ -26,37 +26,37 @@ public class Service {
 
     public void doProcess(String fileName){
         FaceEngine faceEngine = new FaceEngine();
-//        faceEngine.active("3G4cuARsSzRB1yqCdb81k9BYg9REisXrUEvpa9f2Mhz8", "2NLXmxWqt6FGT1v79DWcJaGorM3qxZu4H3ezWXt34r9M");
-//        EngineConfiguration engineConfiguration = EngineConfiguration.builder().functionConfiguration(
-//                FunctionConfiguration.builder()
-//                        .supportAge(true)
-//                        .supportFace3dAngle(true)
-//                        .supportFaceDetect(true)
-//                        .supportFaceRecognition(true)
-//                        .supportGender(true)
-//                        .build()).build();
-//        faceEngine.init(engineConfiguration);
-//        fileManagement.download(fileName+".yuv");
-//        File file = new File("/tmp/"+fileName+".yuv");
-//        if (!file.exists()) {
-//            System.out.println("file not exits");
-//            faceEngine.unInit();
-//            return;
-//        }
-//        try{
-//            ImageInfo imageInfo = getRGBData(new FileInputStream(file));
-//            List<FaceInfo> faceInfoList = new ArrayList<FaceInfo>();
-//            faceEngine.detectFaces(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList);
-//
-//            FaceFeature faceFeature = new FaceFeature();
-//            faceEngine.extractFaceFeature(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList.get(0), faceFeature);
-//            fileManagement.upload(fileName, faceFeature.getFeatureData());
-//        }
-//        catch (Exception e){
-//
-//        }
+        faceEngine.active("3G4cuARsSzRB1yqCdb81k9BYg9REisXrUEvpa9f2Mhz8", "2NLXmxWqt6FGT1v79DWcJaGorM3qxZu4H3ezWXt34r9M");
+        EngineConfiguration engineConfiguration = EngineConfiguration.builder().functionConfiguration(
+                FunctionConfiguration.builder()
+                        .supportAge(true)
+                        .supportFace3dAngle(true)
+                        .supportFaceDetect(true)
+                        .supportFaceRecognition(true)
+                        .supportGender(true)
+                        .build()).build();
+        faceEngine.init(engineConfiguration);
+        fileManagement.download(fileName+".jpg");
+        File file = new File("/tmp/"+fileName+".jpg");
+        if (!file.exists()) {
+            System.out.println("file not exits");
+            faceEngine.unInit();
+            return;
+        }
+        try{
+            ImageInfo imageInfo = getRGBData(file);
+            List<FaceInfo> faceInfoList = new ArrayList<FaceInfo>();
+            faceEngine.detectFaces(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList);
+
+            FaceFeature faceFeature = new FaceFeature();
+            faceEngine.extractFaceFeature(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList.get(0), faceFeature);
+            fileManagement.upload(fileName, faceFeature.getFeatureData());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         //人脸检测
-//        faceEngine.unInit();
+        faceEngine.unInit();
     }
 
     private ImageInfo getRGBData(File file) {
