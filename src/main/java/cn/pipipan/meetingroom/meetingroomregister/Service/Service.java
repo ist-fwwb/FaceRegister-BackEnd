@@ -36,13 +36,13 @@ public class Service {
                         .supportGender(true)
                         .build()).build();
         faceEngine.init(engineConfiguration);
-        fileManagement.download(fileName+".yuv");
-        File file = new File("/tmp/"+fileName+".yuv");
-        if (!file.exists()) {
-            System.out.println("file not exits");
-            faceEngine.unInit();
-            return;
-        }
+//        fileManagement.download(fileName+".yuv");
+//        File file = new File("/tmp/"+fileName+".yuv");
+//        if (!file.exists()) {
+//            System.out.println("file not exits");
+//            faceEngine.unInit();
+//            return;
+//        }
 //        try{
 //            ImageInfo imageInfo = getRGBData(new FileInputStream(file));
 //            List<FaceInfo> faceInfoList = new ArrayList<FaceInfo>();
