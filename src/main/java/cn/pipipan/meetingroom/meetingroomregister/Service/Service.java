@@ -43,18 +43,18 @@ public class Service {
             faceEngine.unInit();
             return;
         }
-        try{
-            ImageInfo imageInfo = getRGBData(new FileInputStream(file));
-            List<FaceInfo> faceInfoList = new ArrayList<FaceInfo>();
-            faceEngine.detectFaces(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList);
-
-            FaceFeature faceFeature = new FaceFeature();
-            faceEngine.extractFaceFeature(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList.get(0), faceFeature);
-            fileManagement.upload(fileName, faceFeature.getFeatureData());
-        }
-        catch (Exception e){
-
-        }
+//        try{
+//            ImageInfo imageInfo = getRGBData(new FileInputStream(file));
+//            List<FaceInfo> faceInfoList = new ArrayList<FaceInfo>();
+//            faceEngine.detectFaces(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList);
+//
+//            FaceFeature faceFeature = new FaceFeature();
+//            faceEngine.extractFaceFeature(imageInfo.getRgbData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList.get(0), faceFeature);
+//            fileManagement.upload(fileName, faceFeature.getFeatureData());
+//        }
+//        catch (Exception e){
+//
+//        }
         //人脸检测
         faceEngine.unInit();
     }
